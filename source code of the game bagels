@@ -1,0 +1,73 @@
+import random
+def create_secret():
+    l=''
+    for i in range(4):
+        secret=random.randint(0,9)
+        while str(secret) in l:
+            secret=random.randint(0,9)
+        l+=str(secret)
+    return int(l)
+
+def print_tips(secret, number):
+    flag=False
+    number=[i for i in str(number)]
+    secret=[i for i in str(secret)]
+    for i in number:
+        if i in secret:
+            if secret.index(i)==number.index(i):
+                print('branco')
+            else:
+                print('preto')
+            flag=True
+    if flag==False:
+        print('bagels')
+
+def talk_tips():
+    print("""
+Bagels é um jogo de puzzle
+onde o usuário tem que descobrir
+o número secreto que a máquina
+prepara e na ordem certa de seus dígitos.
+Esse número tem 4 dígitos, não se repetem e vão de 0 à 9.
+você tem apenas dez chances para acertar, caso
+ao contrário, você perde.
+Ao longo do jogo também, ele irá lhe
+dar dicas de seus dígitos.
+
+1-preto: quando o número está no segredo,
+mas não está na ordem certa.
+
+2-branco: quando o número está no segredo
+e na ordem certa também.
+
+3-bagels: quando não há nenhum número digitado
+no segredo.""")
+    
+def check_digit(numero):
+    numero=[i for i in str(numero)]
+    if len(numero)>4 or len(numero)<4:
+        return False
+    for i in numero:
+        if numero.count(i)>1:
+            return False
+    return True
+
+def play():
+    secret=create_secret()    
+    for i in range(10):
+        print(i+1,' / 10')
+        n=int(input('digite seu número: '))
+        while check_digit(n)==False:
+            print('error')
+            n=int(input('digite seu número novamente: '))
+        print_tips(secret,n)
+        if verify_victory(n,secret)==True:
+            print('segredo= ',secret)
+            return 'você venceu'
+    print('segredo= ',secret)
+    return 'você perdeu'
+
+def verify_victory(n, secret):
+    if n==secret:
+        return True
+    return False

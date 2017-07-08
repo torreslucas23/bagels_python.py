@@ -53,7 +53,9 @@ def check_digit(numero):
     return True
 
 def play():
-    secret=create_secret()    
+    secret=create_secret()
+    while len(str(secret))<4:
+        secret=create_secret()
     for i in range(10):
         print(i+1,' / 10')
         n=int(input('digite seu número: '))
@@ -71,3 +73,7 @@ def verify_victory(n, secret):
     if n==secret:
         return True
     return False
+    
+
+
+    
